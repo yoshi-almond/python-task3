@@ -1,6 +1,5 @@
 import eel
 import pandas as pd
-import os
 
 @eel.expose
 def py_search(word,path):
@@ -23,5 +22,3 @@ def py_search(word,path):
 
 eel.init("web") #HTMLのフォルダ
 eel.start("main.html") #スタートページのファイル名
-
-
