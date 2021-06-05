@@ -1,10 +1,22 @@
 import eel
 import pandas as pd
+import os
+import sys
 
 @eel.expose
-def py_search(word,path):
+def py_search(word,name):
+    if getattr(sys, 'frozen', False):
+    # If the application is run as a bundle, the PyInstaller bootloader
+    # extends the sys module by a flag frozen=True and sets the app 
+    # path into variable _MEIPASS'.
+        dpath = sys._MEIPASS
+    else:
+        dpath = os.path.dirname(os.path.abspath(__file__))
+    print(dpath)
+    csv_path = dpath + '/' + name
     try:
-        df = pd.read_csv(path)
+        print(csv_path)
+        df = pd.read_csv(csv_path)
     except FileNotFoundError:
         print("ファイルが見つかりません")
         return 0
@@ -16,7 +28,7 @@ def py_search(word,path):
         print(word+'は見つかりませんでした')
         src.append(word)
         src = pd.DataFrame(src,columns=['name'])
-        src.to_csv(path,index=False)
+        src.to_csv(csv_path,index=False)
         print(word+'を新しく追加しました')
         return 2
 
