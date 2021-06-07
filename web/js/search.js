@@ -11,11 +11,11 @@ const log = () => {
         const search = async () => {
             let res = await eel.py_search(search_word,csv_file_name)();
             let text_area = document.getElementById("log-field");
-            if(res == 0){
-                window.alert("ファイルが存在しません");
-            }else if(res == 1){
+            if(res[0] == 0){
+                window.alert(`ファイルが存在しません\n(カレントディレクトリ : ${res[1]})`);
+            }else if(res[0] == 1){
                 text_area.value += `${search_word}は見つかりました\n`;
-            }else if(res == 2){
+            }else if(res[0] == 2){
                 text_area.value += `${search_word}は見つかりませんでした\n`;
                 text_area.value += `${search_word}を追加しました\n`;
             }
